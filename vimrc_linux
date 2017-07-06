@@ -1,0 +1,443 @@
+set nocompatible
+filetype off
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle Configure
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+"Plugin 'Valloric/YouCompleteMe'
+Plugin 'a.vim'
+Plugin 'taglist.vim'
+Plugin 'minibufexpl.vim'
+Plugin 'grep.vim'
+Plugin 'DoxygenToolkit.vim'
+Plugin 'The-NERD-Commenter'
+Plugin 'winmanager'
+Plugin 'cpp.vim'
+Plugin 'c.vim'
+Plugin 'python.vim'
+Plugin 'Solarized'
+Plugin 'eclm_wombat.vim'
+Plugin 'wombat256.vim'
+Plugin 'Wombat'
+
+call vundle#end()
+
+filetype plugin indent on
+
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+set diffexpr=MyDiff()
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Display Preferences
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Line Number
+set nu!
+
+" Font
+"set guifont=Bitstream\ Vera\ Sans\ Mono\ 11
+
+" Color Scheme
+set t_Co=256
+"colorscheme desert
+"colorscheme desert256
+"colorscheme evening
+colorscheme wombat256mod
+"let g:solarized_termcolors=256
+"colorscheme solarized
+
+" Use only VIM keyboard 
+set nocompatible 
+
+" History file length 
+set history=100 
+
+" Use Clipboard 
+set clipboard+=unnamed 
+
+" Save exit status 
+set viminfo+=! 
+
+" Do NOT split the word with following symbols 
+set iskeyword+=_,$,@,%,#,- 
+
+" Highlight when the length of a line is over 100 
+:highlight OverLength ctermbg=red ctermfg=white guibg=red guifg=white 
+:match OverLength '\%101v.*' 
+
+" States Line Color 
+highlight StatusLine guifg=SlateBlue guibg=Yellow 
+highlight StatusLineNC guifg=Gray guibg=White 
+
+" Line space (pixel) 
+set linespace=0
+
+" Display the cursor position in the state line 
+set ruler 
+set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%) 
+
+" Command line height 
+set cmdheight=2 
+
+" Use space between two windows 
+set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+
+" Highlight machedparentheses
+set showmatch
+set matchtime=5 
+
+" States Line config 
+set statusline=%F%m%r%h%w\[POS=%l,%v][%p%%]\%{strftime(\"%d/%m/%y\ -\ %H:%M\")} 
+
+" Always display states line 
+set laststatus=2 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Action Options 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Need user confirmation when exit with modified buffer 
+set confirm 
+
+" Do NOT backup files 
+set nobackup 
+
+" Do NOT use swap file 
+"setlocal noswapfile 
+
+" Hide buffer when discarded
+set bufhidden=hide 
+
+" Command Line Auto completion 
+set wildmenu 
+
+" Backspace configs 
+set backspace=2 
+set whichwrap+=<,>,h,l 
+
+" Use mouse in work space 
+set mouse=a 
+set selection=exclusive 
+set selectmode=mouse,key 
+
+" Do NOT show the message during startup 
+"set shortmess=atI 
+
+" Enable report 
+set report=0 
+
+" Do NOT use bells 
+set noerrorbells 
+
+" Ignore cases when searching 
+set ignorecase 
+
+" Do NOT highlight mached results when searching 
+"set nohlsearch 
+
+" Enable increase search 
+set incsearch 
+
+" Set List configs 
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$ 
+
+" The num of blank lines when scrolling 
+"set scrolloff=3 
+
+" Do NOT use visualbell 
+"set novisualbell 
+
+" Tab config 
+set tabstop=4  
+set softtabstop=4 
+set shiftwidth=4 
+"set expandtab
+set smarttab 
+
+" Do NOT warp 
+"set nowrap 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Language Options 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Coding
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+if has("multi_byte") 
+    " UTF-8 
+    set encoding=utf-8 
+    set termencoding=utf-8 
+    set formatoptions+=mM 
+    set fencs=utf-8,gbk 
+    if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)' 
+        set ambiwidth=double 
+    endif 
+    if has("win32") 
+        source $VIMRUNTIME/delmenu.vim 
+        source $VIMRUNTIME/menu.vim 
+        language messages zh_CN.utf-8 
+    endif 
+else 
+    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" IDE Options 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable syntax display
+syntax enable
+syntax on
+
+" Load filetype detect plugin 
+"filetype plugin on 
+
+" Detect file type 
+"filetype on 
+
+" Indent according to the type of file 
+"filetype indent on 
+
+" Auto Format 
+set formatoptions=tcrqn 
+
+" Auto Indent 
+set autoindent 
+
+" Indent for C/C++ file 
+set smartindent 
+
+" C style indent 
+set cindent 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin Optinos 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Taglist
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+
+" Mini Buffer Explorer
+let g:miniBufExplMapWindowNavVim=1
+let g:miniBufExplorerMoreThanOne=0
+
+" WinManager
+let g:winManagerWindowLayout='FileExplorer|TagList'
+nmap mm :WMToggle<cr>
+
+" Ctags
+set tag=tags;
+set autochdir
+
+" CScope
+"set cscopequickfix=s-,c-,d-,i-,t-,e-
+"nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+"nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+"nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" C/h switch
+nnoremap <silent> <F12> :A<CR>
+
+" Smart Completion Options
+set completeopt=longest,menu
+
+" Grep Option
+nnoremap <silent> <F5> :Grep<CR>
+
+" Mini Buffer Explorer Options
+let g:miniBufExplMapWindowsNavVim=1 
+
+" Doxygen Toolkit options
+map fg : Dox<cr>
+let g:DoxygenToolkit_authorName="wenhai pan"
+let g:DoxygenToolkit_licenseTag="My own license\<enter>"
+let g:DoxygenToolkit_undocTag="DOXIGEN_SKIP_BLOCK"
+let g:DoxygenToolkit_briefTag_pre = "@brief\t"
+let g:DoxygenToolkit_paramTag_pre = "@param\t"
+let g:DoxygenToolkit_returnTag = "@return\t"
+let g:DoxygenToolkit_briefTag_funcName = "no"
+let g:DoxygenToolkit_maxFunctionProtoLines = 30
+
+" QuickFix Options
+"nmap <F6> :cn<cr>
+"nmap <F7> :cp<cr>
+
+"Toggle Menu and Toolbar
+set guioptions-=m
+set guioptions-=T
+map <silent> <F2> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <bar>
+    \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+    \endif<CR>
+
+
+" Auto file header
+function HeaderPython()
+    call setline(1, "#!/usr/bin/env python")
+    call append(line("."), "# -*- coding: utf-8 -*-")
+    call append(line(".")+1, "")
+    call append(line(".")+2, "######################################################")
+    call append(line(".")+3, "#")
+    call append(line(".")+4, "# File Name:  " . expand("%:t"))
+    call append(line(".")+5, "#")
+    call append(line(".")+6, "# Function:   ")
+    call append(line(".")+7, "#")
+    call append(line(".")+8, "# Usage:  ")
+    call append(line(".")+9, "#")
+    call append(line(".")+10, "# Input:  ")
+    call append(line(".")+11, "#")
+    call append(line(".")+12, "# Output:	")
+    call append(line(".")+13, "#")
+    call append(line(".")+14, "# Author: ".$LOGNAME)
+    call append(line(".")+15, "#")
+    call append(line(".")+16, "# Create Time:    " . strftime('%Y-%m-%d %T', localtime()))
+    call append(line(".")+17, "#")
+    call append(line(".")+18, "######################################################")
+    call append(line(".")+19, "")
+    call append(line(".")+20, "import sys")
+    call append(line(".")+21, "reload(sys)")
+    call append(line(".")+22, "sys.setdefaultencoding(\"utf-8\")")
+    call append(line(".")+23, "import os")
+    call append(line(".")+24, "import time")
+    call append(line(".")+25, "from datetime import datetime, timedelta")
+    normal G
+    normal o
+    normal o
+endf
+
+function AddHeaderPython()
+	normal gg
+    call setline(1, "#!/usr/bin/env python")
+    call append(line("."), "# -*- coding: utf-8 -*-")
+    call append(line(".")+1, "")
+    call append(line(".")+2, "######################################################")
+    call append(line(".")+3, "#")
+    call append(line(".")+4, "# File Name:  " . expand("%:t"))
+    call append(line(".")+5, "#")
+    call append(line(".")+6, "# Function:   ")
+    call append(line(".")+7, "#")
+    call append(line(".")+8, "# Usage:  ")
+    call append(line(".")+9, "#")
+    call append(line(".")+10, "# Input:  ")
+    call append(line(".")+11, "#")
+    call append(line(".")+12, "# Output:  ")
+    call append(line(".")+13, "#")
+    call append(line(".")+14, "# Author: ".$LOGNAME)
+    call append(line(".")+15, "#")
+    call append(line(".")+16, "# Create Time:    " . strftime('%Y-%m-%d %T', localtime()))
+    call append(line(".")+17, "#")
+    call append(line(".")+18, "######################################################")
+    call append(line(".")+19, "")
+endf
+
+function HeaderBash()
+    call setline(1, "#!/usr/bin/bash")
+    call append(line("."), "")
+    call append(line(".")+1, "")
+    call append(line(".")+2, "######################################################")
+    call append(line(".")+3, "#")
+    call append(line(".")+4, "# File Name:  " . expand("%:t"))
+    call append(line(".")+5, "#")
+    call append(line(".")+6, "# Function:   ")
+    call append(line(".")+7, "#")
+    call append(line(".")+8, "# Usage:  ")
+    call append(line(".")+9, "#")
+    call append(line(".")+10, "# Input:  ")
+    call append(line(".")+11, "#")
+    call append(line(".")+12, "# Output:  ")
+    call append(line(".")+13, "#")
+    call append(line(".")+14, "# Author: ".$LOGNAME)
+    call append(line(".")+15, "#")
+    call append(line(".")+16, "# Create Time:    " . strftime('%Y-%m-%d %T', localtime()))
+    call append(line(".")+17, "#")
+    call append(line(".")+18, "######################################################")
+    normal G
+    normal o
+    normal o
+endf
+
+function AddHeaderBash()
+	normal gg
+    call setline(1, "#!/usr/bin/bash")
+    call append(line("."), "")
+    call append(line(".")+1, "")
+    call append(line(".")+2, "######################################################")
+    call append(line(".")+3, "#")
+    call append(line(".")+4, "# File Name:  " . expand("%:t"))
+    call append(line(".")+5, "#")
+    call append(line(".")+6, "# Function:   ")
+    call append(line(".")+7, "#")
+    call append(line(".")+8, "# Usage:  ")
+    call append(line(".")+9, "#")
+    call append(line(".")+10, "# Input:  ")
+    call append(line(".")+11, "#")
+    call append(line(".")+12, "# Output:  ")
+    call append(line(".")+13, "#")
+    call append(line(".")+14, "# Author: ".$LOGNAME)
+    call append(line(".")+15, "#")
+    call append(line(".")+16, "# Create Time:    " . strftime('%Y-%m-%d %T', localtime()))
+    call append(line(".")+17, "#")
+    call append(line(".")+18, "######################################################")
+endf
+
+function SetTitle()
+	if &filetype == 'sh'
+		call AddHeaderBash()
+	endif
+	
+	if &filetype == 'python'
+		call AddHeaderPython()
+	endif
+endf
+
+autocmd bufnewfile *.py call HeaderPython()
+autocmd bufnewfile *.sh call HeaderBash()
+
+nmap fh : call SetTitle() <cr>
+
