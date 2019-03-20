@@ -9,7 +9,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'a.vim'
 Plugin 'taglist.vim'
 Plugin 'minibufexpl.vim'
@@ -24,6 +24,8 @@ Plugin 'Solarized'
 Plugin 'eclm_wombat.vim'
 Plugin 'wombat256.vim'
 Plugin 'Wombat'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 call vundle#end()
 
@@ -346,6 +348,12 @@ function HeaderPython()
     call append(line(".")+23, "import os")
     call append(line(".")+24, "import time")
     call append(line(".")+25, "from datetime import datetime, timedelta")
+    call append(line(".")+26, "")
+    call append(line(".")+27, "def main():")
+    call append(line(".")+28, "    return")
+    call append(line(".")+29, "")
+    call append(line(".")+30, "if __name__ == \"__main__\":")
+    call append(line(".")+31, "    main()")
     normal G
     normal o
     normal o
@@ -440,4 +448,12 @@ autocmd bufnewfile *.py call HeaderPython()
 autocmd bufnewfile *.sh call HeaderBash()
 
 nmap fh : call SetTitle() <cr>
+
+
+" UltiSnips Snippets
+let g:UltiSnipsUsePythonVersion = 2
+let g:UltiSnipsExpandTrigger="<C-a>"
+let g:UltiSnipsJumpForwardTrigger="<C-l>"
+let g:UltiSnipsJumpBackwardTrigger="<C-j>"
+let g:UltiSnipsEditSplit="vertical"
 
