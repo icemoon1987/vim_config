@@ -24,8 +24,8 @@ Plugin 'Solarized'
 Plugin 'eclm_wombat.vim'
 Plugin 'wombat256.vim'
 Plugin 'Wombat'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
 
 call vundle#end()
 
